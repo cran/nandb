@@ -1,7 +1,7 @@
 Package: nandb
 Type: Package
 Title: Number and Brightness Image Analysis
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
                     role = c("aut", "cre", "cph")),
              person("Luis", "Alvarez", email = "lalvarez@well.ox.ac.uk",
@@ -17,17 +17,17 @@ Description: Functions for calculation of molecular number and brightness from
 License: BSD_3_clause + file LICENSE
 LazyData: TRUE
 LinkingTo: Rcpp, BH
-Imports: Rcpp, filesstrings, magrittr, readr, reshape2, R.utils,
-        autothresholdr, abind, viridis, dplyr, matrixStats,
-        BiocParallel, parallel, stringr, EBImage, RSAGA, ggplot2,
-        grDevices, RcppRoll, tibble, purrr, hexbin, ore, tiff
+Imports: Rcpp, filesstrings (>= 1.1.0), magrittr, readr, reshape2,
+        R.utils, autothresholdr, abind, viridis, dplyr, matrixStats,
+        BiocParallel, stringr, EBImage, RSAGA, ggplot2, grDevices,
+        RcppRoll, tibble, purrr, hexbin, ore, DescTools
 RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown, covr, testthat
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2017-05-29 15:04:02 UTC; rnolan
+Packaged: 2017-07-11 10:22:50 UTC; rnolan
 Author: Rory Nolan [aut, cre, cph],
   Luis Alvarez [ctb],
   Sergi Padilla-Parra [ctb, ths, cph]
 Repository: CRAN
-Date/Publication: 2017-05-29 16:11:29 UTC
+Date/Publication: 2017-07-11 10:35:22 UTC

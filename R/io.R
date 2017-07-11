@@ -18,6 +18,13 @@
 #' }`j` is from `mat[j, i]`, so if you're confused about a phantom
 #' transposition, this is why.
 #'
+#' Sometimes (for whatever reason) the reading of image values as integers with
+#' `readTIFF(..., as.is = TRUE)` fails such that the values which should be 1,
+#' 2, 3 etc. end up as 256, 512, 778 etc. This function corrects for this as
+#' follows: if the greatest common divisor of the elements in the array are one
+#' of 2^8, 2^12, 2^16 or 2^32, then divide each element of the array by this
+#' greatest common divisor. This will return 256, 512, 778 etc. to 1, 2, 3 etc.
+#'
 #' @param image.name The path to the image file on disk. The file extension must
 #'   be one of '.jpeg', '.png', '.tiff' or '.tif'.
 #' @param fix.lut When reading in images (via [EBImage::readImage()]), R can
@@ -45,6 +52,20 @@ ReadImageData <- function(image.name, fix.lut = NULL) {
            " (not as TRUE). Read the documentation for ReadImageData.")
     }
     image.data <- FixLUTError(image.data, fix.lut)
+  }
+  vec <- as.vector(image.data)
+  if (any(vec > 0)) {
+    g0unq <- as.vector(image.data) %>%
+      {.[. > 0]} %>%
+      unique()
+    if (length(g0unq) == 1) {
+      gcdg0 <- g0unq
+    } else {
+      gcdg0 <- DescTools::GCD(g0unq)
+    }
+    if (gcdg0 %in% (2 ^ c(8, 12, 16, 32))) {
+      image.data <- image.data / gcdg0
+    }
   }
   image.data
 }
@@ -83,15 +104,15 @@ WriteImageTxt <- function(img.arr, file.name) {
   if (nd == 2) {
     img.arr <- t(img.arr)
     as.data.frame(img.arr) %>%
-      readr::write_csv(filesstrings::GiveExt(file.name, "csv"),
+      readr::write_csv(filesstrings::give_ext(file.name, "csv"),
                        col_names = FALSE)
   } else if (nd == 3) {
     img.arr <- aperm(img.arr, c(2, 1, 3))
     slices.dfs <- lapply(seq_len(d[3]), Slices, img.arr) %>%
       lapply(as.data.frame)
     file.names <- paste0(file.name, "_", seq_len(d[3])) %>%
-      vapply(filesstrings::GiveExt, character(1), "csv") %>%
-      (filesstrings::NiceNums)
+      vapply(filesstrings::give_ext, character(1), "csv") %>%
+      (filesstrings::nice_nums)
     mapply(readr::write_csv, slices.dfs, file.names, col_names = FALSE,
            SIMPLIFY = FALSE) %>%
       invisible
@@ -99,8 +120,8 @@ WriteImageTxt <- function(img.arr, file.name) {
     img.arr <- aperm(img.arr, c(2, 1, 3, 4))
     grid <- expand.grid(seq_len(d[3]), seq_len(d[4]))
     file.names <- paste0(file.name, "_", grid[, 1], "_", grid[, 2]) %>%
-      vapply(filesstrings::GiveExt, character(1), "csv") %>%
-      (filesstrings::NiceNums)
+      vapply(filesstrings::give_ext, character(1), "csv") %>%
+      (filesstrings::nice_nums)
     dfs <- purrr::map(Mat2RowList(as.matrix(grid)),
                        ~ img.arr[, , .[1], .[2]]) %>%
       lapply(as.data.frame)
@@ -136,7 +157,9 @@ ReadImageTxt <- function(file.name) {
 #' @param na How do you want to treat `NA` values? R can only write integer
 #'   values (and hence not `NA`s) to tiff pixels. `na = 'saturate'` sets them to
 #'   saturated value. `na = 'zero'` sets them to zero, while `na = 'error'` will
-#'   give an error if the image contains `NA`s.
+#'   give an error if the image contains `NA`s. You can also specify directly
+#'   here a natural number (must be between 0 and 2 ^ 16 - 1) to use in place of
+#'   `NA`s.
 #'
 #' @examples
 #' img <- ReadImageData(system.file('extdata', '50.tif', package = 'nandb'))
@@ -146,33 +169,41 @@ ReadImageTxt <- function(file.name) {
 #'
 #' @export
 WriteIntImage <- function(img.arr, file.name, na = "error") {
+  to.invisibly.return <- img.arr
   if (!all(CanBeInteger(img.arr), na.rm = TRUE)) {
     stop("img.arr must contain only integers")
   }
   if (!all(img.arr >= 0, na.rm = TRUE)) {
     stop("img.arr must not contain negative values")
   }
-  na <- RSAGA::match.arg.ext(na, c("saturate", "zero", "error"),
-    ignore.case = TRUE)
+  stopifnot(length(na) == 1)
+  if (is.numeric(na)) {
+    stopifnot(na >= 0, na < 2 ^ 16)
+    na <- floor(na)
+  } else {
+    na <- RSAGA::match.arg.ext(na, c("saturate", "zero", "error"),
+                               ignore.case = TRUE)
+  }
   any.nas <- anyNA(img.arr)
   if (na == "error" && any.nas) stop("img.arr contains NA values.")
+  if (is.numeric(na)) img.arr[is.na(img.arr)] <- na
   mx <- max(img.arr, na.rm = TRUE)
-  if (mx >= 2^16) {
+  if (mx >= 2 ^ 16) {
     stop("The maximum value in img.arr must be less than 2^16")
-  } else if (mx >= 2^8) {
+  } else if (mx >= 2 ^ 8) {
     bits.per.sample <- 16
   } else {
     bits.per.sample <- 8
   }
   img.arr <- img.arr / (2 ^ bits.per.sample - 1)
   if (any.nas) {
-    if (na == "saturate")
-      img.arr[is.na(img.arr)] <- 1
-    if (na == "zero")
-      img.arr[is.na(img.arr)] <- 0
+    if (na == "saturate") img.arr[is.na(img.arr)] <- 1
+    if (na == "zero") img.arr[is.na(img.arr)] <- 0
   }
-  file.name <- filesstrings::GiveExt(file.name, "tif")
+  file.name <- filesstrings::give_ext(file.name, "tif")
+  message("Now writing ", file.name, ".")
   EBImage::writeImage(img.arr, file.name, bits.per.sample = bits.per.sample)
+  invisible(to.invisibly.return)
 }
 
 #' Fix an image that didn't recognise channels while reading
@@ -237,7 +268,7 @@ ForceChannels <- function(img.arr, n.ch) {
 #' file.remove(list.files())
 #' @export
 Stack2DTifs <- function(file.names, out.name, mcc = parallel::detectCores()) {
-  out.name <- filesstrings::GiveExt(out.name, "tif")
+  out.name <- filesstrings::give_ext(out.name, "tif")
   images <- BiocParallel::bplapply(file.names, EBImage::readImage,
     BPPARAM = bpp(mcc))
   dims <- lapply(images, dim)
@@ -277,7 +308,7 @@ Bin2Tiff <- function(bin.path, bits, height, width, frames = 1,
                      endian = .Platform$endian, signed = TRUE) {
   file.name.short <- bin.path
   if (stringr::str_detect(file.name.short, "/")) {
-    file.dir <- filesstrings::StrBeforeNth(file.name.short, "/", -1)
+    file.dir <- filesstrings::str_before_nth(file.name.short, "/", -1)
     current.wd <- getwd()
     on.exit(setwd(current.wd))
     setwd(file.dir)
@@ -289,7 +320,7 @@ Bin2Tiff <- function(bin.path, bits, height, width, frames = 1,
                         signed = signed, size = bits %/% 8)
   arr <- array(bin.vector, dim = c(height, width, frames))
   if (dim(arr)[3] == 1) arr <- arr[, , 1]
-  WriteIntImage(arr, filesstrings::BeforeLastDot(file.name.short))
+  WriteIntImage(arr, filesstrings::before_last_dot(file.name.short))
 }
 
 #' @rdname Bin2Tiff

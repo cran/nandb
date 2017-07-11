@@ -47,15 +47,28 @@ test_that("WriteIntImage works", {
     # these fail on windows due to an issue with readTIFF(..., as.is = TRUE)
     expect_equal(ReadImageData("50.tif"), img, check.attributes = FALSE)
   }
+  img[33] <- NA
+  expect_equal(WriteIntImage(img, "pimg.tiff", na = pi), img)
   suppressWarnings(file.remove(list.files()))
 })
 
 test_that("ReadImageData works", {
+  cwd <- getwd()
+  on.exit(setwd(cwd))
+  setwd(tempdir())
   file.path <- system.file('extdata', '50.tif', package = 'nandb')
   expect_equal(EBImage::imageData(EBImage::readImage(file.path, as.is = TRUE)),
                ReadImageData(file.path, 3))
   expect_error(ReadImageData(file.path, TRUE), "integer")
-
+  expect_equal(max(ReadImageData(system.file("extdata", "needs_rescaling.tif",
+                                             package = "nandb"))),
+               6)
+  badwrite <- WriteIntImage(matrix(c(rep(0, 3), 256), nrow = 2), "badwrite.tif")
+  if (!stringr::str_detect(tolower(Sys.info()['sysname']), "windows")) {
+    # these fail on windows due to an issue with readTIFF(..., as.is = TRUE)
+    expect_equal(ReadImageData("badwrite.tif"), badwrite / 256)
+  }
+  suppressWarnings(file.remove(list.files()))
 })
 
 test_that("WriteImageTxt works", {
@@ -101,5 +114,5 @@ test_that("Bin2Tiff works", {
                  as.vector(ReadImageData("b.tif")))
   }
   setwd("..")
-  filesstrings::RemoveDirs("temp_dir")
+  filesstrings::dir.remove("temp_dir")
 })
