@@ -1,19 +1,11 @@
 #' @useDynLib nandb, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-#' @importFrom magrittr '%>%' '%T>%'
-#' @import ggplot2
-#' @importFrom hexbin hexbin
+#' @importFrom magrittr '%>%' '%T>%' '%<>%'
 NULL
 
-## quiet concerns of R CMD check re: the .'s that appear in
-## pipelines
+## quiet concerns of R CMD check re: the .'s that appear in pipelines
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(".", "Var1", "Var2", "value", "x", "y", "colour"))
-}
-
-.onLoad <- function(libname, pkgname) {
-  ## Workaround needed for BiocParallel MulticoreParam to work on mac
-  options(bphost = "localhost")
 }
 
 .onUnload <- function (libpath) {
@@ -28,6 +20,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' @docType package
 #' @name nandb
+#' @aliases nandb-package
 #' @references Digman MA, Dalal R, Horwitz AF, Gratton E. Mapping the Number of
 #'   Molecules and Brightness in the Laser Scanning Microscope. Biophysical
 #'   Journal. 2008;94(6):2320-2332. \doi{10.1529/biophysj.107.114645}.

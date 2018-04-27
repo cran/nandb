@@ -12,8 +12,8 @@ double sign(double x) {
 
 //' Smooth and median filters with options for handling NAs.
 //'
-//' These is an alternative to [EBImage][EBImage::EBImage]'s
-//' [filter2][EBImage::filter2] and [medianFilter][EBImage::medianFilter] for
+//' These are alternatives to
+//' `EBImage::filter2()` and `EBImage::medianFilter()` for
 //' smooth and median filtering respectively. These functions have many options
 //' for dealing with \code{NA} values which \code{EBImage}'s functions lack.
 //'
@@ -33,13 +33,13 @@ double sign(double x) {
 //' m <- matrix(1:9, nrow = 3)
 //' m[2:3, 2:3] <- NA
 //' print(m)
-//' MedianFilterB(m)
-//' MedianFilterB(m, na_rm = TRUE)
-//' MedianFilterB(m, na_count = TRUE)
+//' median_filter(m)
+//' median_filter(m, na_rm = TRUE)
+//' median_filter(m, na_count = TRUE)
 //'
 //' @export
 // [[Rcpp::export]]
-NumericMatrix MedianFilterB(NumericMatrix mat, int size = 1,
+NumericMatrix median_filter(NumericMatrix mat, int size = 1,
                             bool na_rm = false, bool na_count = false) {
   int nr = mat.nrow();
   int nc = mat.ncol();
@@ -68,7 +68,7 @@ NumericMatrix MedianFilterB(NumericMatrix mat, int size = 1,
       }
       double filtered_ij;
       if (na_count) {
-        if (sum(is_na(square)) > pow(square_side_len, 2) / 2.0)
+        if (sum(is_na(square)) > square_side_len * square_side_len / 2.0)
           filtered_ij = NA_REAL;
         else
           filtered_ij = median(square, true);
@@ -81,22 +81,22 @@ NumericMatrix MedianFilterB(NumericMatrix mat, int size = 1,
   return median_filtered;
 }
 
-//' @rdname MedianFilterB
+//' @rdname median_filter
 //'
 //' @examples
-//' MedianFilterB(m)
-//' MedianFilterB(m, na_rm = TRUE)
-//' MedianFilterB(m, na_count = TRUE)
+//' smooth_filter(m)
+//' smooth_filter(m, na_rm = TRUE)
+//' smooth_filter(m, na_count = TRUE)
 //'
 //' @export
 // [[Rcpp::export]]
-NumericMatrix SmoothFilterB(NumericMatrix mat, int size = 1,
+NumericMatrix smooth_filter(NumericMatrix mat, int size = 1,
                             bool na_rm = false, bool na_count = false) {
   int nr = mat.nrow();
   int nc = mat.ncol();
   NumericMatrix smoothed(nr, nc);
   int square_side_len = 2 * size + 1;
-  int square_size = pow(square_side_len, 2);
+  int square_size = square_side_len * square_side_len;
   NumericMatrix square(square_side_len, square_side_len);
   int row;
   int col;
