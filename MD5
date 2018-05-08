@@ -1,7 +1,7 @@
-d3a10d8973c9c29feed7d2eb9019c7e2 *DESCRIPTION
+957a3e9b7e5902fd1ee607949908ad54 *DESCRIPTION
 a41956e263881aa339bfb8708462e69a *LICENSE
 2f05c35d2538d4f235e226ef6a3cee7f *NAMESPACE
-f11b0d1ec6db6c7cc96f74ea6066bec4 *NEWS.md
+9a3c92cef233ab4a7a5aee14695801d9 *NEWS.md
 c5e029d65a2bd9146535c9447ade9470 *R/RcppExports.R
 c93f31090caacdb31e0ffb490e6dc72f *R/brightness.R
 0942a88679ce44881cefd7ea9dd594be *R/cc_brightness.R
@@ -12,12 +12,12 @@ a22440c38db340dafb3b066ddf4dd68b *R/cross_var.R
 92b327c522b31a7c740e29cf1d33a629 *R/nandb.R
 3a7d3eb2999aa49a804380e1532e7ef4 *R/number.R
 a2324ffcc258678b2ea54bf90037f4f2 *R/utils.R
-dcd8f763363af2aec8ed5ddd73e71cea *build/partial.rdb
+e7f10ec83faa27514cf33e71eb604a98 *build/partial.rdb
 37622cd6d78e876fa5ee1e6972376b24 *build/vignette.rds
 decc2ba43d2a27e2525f31c9a47aeccd *inst/CITATION
 174e641ede61d6b0189ca9a69d31ef7f *inst/doc/nandb.R
 083bcd28e590cc405fadd2c71936d8f4 *inst/doc/nandb.Rmd
-1810844ec240ff88349a3551b72f0f11 *inst/doc/nandb.html
+75e9e1fd9400fc7165edef9f6df04c10 *inst/doc/nandb.html
 2ae427f91f7ae73a8dbab6eb1c1d17db *inst/extdata/50.tif
 145ed3dd2aba63566f8a393e341f348d *inst/extdata/50_big.tif
 08d6c05a21512a79a1dfeb9d2a8f262f *inst/extdata/b.bin
@@ -53,7 +53,7 @@ cda1c47fb844c366d496b7599112b618 *man/number_timeseries.Rd
 9855caa4393e05720f411b7a79e64304 *src/float.cpp
 61a8ab52a6d56d5b1c3eac64820fc01b *tests/testthat.R
 e1f5db6b23fb867399ff05358252eece *tests/testthat/test-brightness.R
-616c3ba2d60d19b9b087bab9580dced2 *tests/testthat/test-cc_brightness.R
+a4f7a043177eef1b90ddc8cef977729d *tests/testthat/test-cc_brightness.R
 e916ce4193fb689340a27d63e5eb65ea *tests/testthat/test-cc_number.R
 b373866c6ed5848e68eecee4ab2775f7 *tests/testthat/test-class_constructors.R
 0e30bd427b62f9577f5f1b373bee492c *tests/testthat/test-cross_var-examples.R
