@@ -1,3 +1,9 @@
+## `nandb` 2.0.1
+
+#### BUG FIXES
+* Require necessary versions of `glue` and `filesstrings`.
+
+
 ## `nandb` 2.0.0
 
 #### MAJOR CHANGES

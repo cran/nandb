@@ -1,7 +1,7 @@
 Package: nandb
 Type: Package
 Title: Number and Brightness Image Analysis
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com", 
                     role = c("aut", "cre", "cph"),
                     comment = c(ORCID = "0000-0002-5239-4043")),
@@ -12,7 +12,8 @@ Authors@R: c(person("Rory", "Nolan", email = "rorynoolan@gmail.com",
                     role = c("ctb", "ths", "cph"),
                     comment = c(ORCID = "0000-0002-8010-9481")))
 Maintainer: Rory Nolan <rorynoolan@gmail.com>
-URL: https://github.com/rorynolan/nandb
+URL: https://rorynolan.github.io/nandb,
+        https://github.com/rorynolan/nandb
 BugReports: https://github.com/rorynolan/nandb/issues
 Description: Calculation of molecular number and brightness from 
     fluorescence microscopy image series. The software was published in a 2016
@@ -22,22 +23,21 @@ Description: Calculation of molecular number and brightness from
 License: BSD_3_clause + file LICENSE
 LazyData: TRUE
 LinkingTo: Rcpp
-Imports: Rcpp, filesstrings (>= 3.0.0), magrittr, autothresholdr (>=
-        1.3.0), dplyr, stringr, purrr, checkmate, detrendr (>= 0.6.0),
-        ijtiff (>= 1.5.0), rlang, stats, MASS, reshape2, viridis, glue,
-        BBmisc, ggplot2, assertthat, utils
-RoxygenNote: 6.1.0
-Suggests: knitr, rmarkdown, covr, testthat, abind, clipr, ore (>=
-        1.4.0), styler, tidyr, mgcv, gridExtra, pacman, matrixStats,
-        spelling
+Imports: Rcpp, filesstrings (>= 3.1.1), magrittr, autothresholdr (>=
+        1.3.1), dplyr, stringr, purrr, checkmate (>= 1.9.1), detrendr
+        (>= 0.6.1), ijtiff (>= 1.5.1), rlang (>= 0.3.3), reshape2,
+        viridis, glue (>= 1.3.0), BBmisc, ggplot2, assertthat, utils
+RoxygenNote: 6.1.1
+Suggests: knitr, rmarkdown, covr, testthat (>= 2.1.0), abind, tidyr,
+        gridExtra, pacman, matrixStats, spelling
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-US
 NeedsCompilation: yes
-Packaged: 2018-11-11 19:26:00 UTC; rnolan
+Packaged: 2019-05-31 16:08:02 UTC; rnolan
 Author: Rory Nolan [aut, cre, cph] (<https://orcid.org/0000-0002-5239-4043>),
   Luis Alvarez [ctb, cph] (<https://orcid.org/0000-0003-1316-1906>),
   Sergi Padilla-Parra [ctb, ths, cph]
     (<https://orcid.org/0000-0002-8010-9481>)
 Repository: CRAN
-Date/Publication: 2018-11-11 19:50:03 UTC
+Date/Publication: 2019-05-31 17:30:03 UTC
