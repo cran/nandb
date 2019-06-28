@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rory Nolan" />
 
-<meta name="date" content="2019-06-16" />
+<meta name="date" content="2019-06-28" />
 
 <title>Calculating brightness with single images</title>
 
@@ -303,7 +303,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Calculating brightness with single images</h1>
 <h4 class="author">Rory Nolan</h4>
-<h4 class="date">2019-06-16</h4>
+<h4 class="date">2019-06-28</h4>
 
 
 
@@ -317,7 +317,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>The image can be read into R with the <code>read_tif()</code> command provided by the <code>ijtiff</code> package. We’ll assign it to a variable called <code>my_img</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;two_ch.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;nandb&quot;</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">print</span>(path)</a></code></pre></div>
-<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/Rtmpz2IshA/Rinstaf015f2a1f/nandb/extdata/two_ch.tif&quot;</code></pre>
+<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/RtmpUm1EzU/Rinst14750389ed8db/nandb/extdata/two_ch.tif&quot;</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_img &lt;-<span class="st"> </span><span class="kw">read_tif</span>(path)</a></code></pre></div>
 <pre><code>#&gt; Reading two_ch.tif: an 8-bit, 30x28 pixel image of unsigned
 #&gt; integer type. Reading 2 channels and 100 frames . . .</code></pre>

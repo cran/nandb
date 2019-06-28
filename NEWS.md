@@ -1,3 +1,10 @@
+# `nandb` 2.0.3
+
+## BUG FIXES
+* Fix tests on CRAN Solaris and Windows oldrel.
+* Insist on latest, bug-fixed `filesstrings` v3.1.5.
+
+
 # `nandb` 2.0.2
 
 ## BUG FIXES
