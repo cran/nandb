@@ -7,12 +7,13 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="Rory Nolan" />
 
-<meta name="date" content="2019-07-08" />
+<meta name="date" content="2019-08-22" />
 
 <title>Calculating brightness with single images</title>
 
@@ -96,7 +97,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -303,7 +304,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Calculating brightness with single images</h1>
 <h4 class="author">Rory Nolan</h4>
-<h4 class="date">2019-07-08</h4>
+<h4 class="date">2019-08-22</h4>
 
 
 
@@ -317,7 +318,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>The image can be read into R with the <code>read_tif()</code> command provided by the <code>ijtiff</code> package. We’ll assign it to a variable called <code>my_img</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;two_ch.tif&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;nandb&quot;</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">print</span>(path)</a></code></pre></div>
-<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/Rtmpck5MMq/Rinst72787c2d911b/nandb/extdata/two_ch.tif&quot;</code></pre>
+<pre><code>#&gt; [1] &quot;/private/var/folders/l_/2mwm03p55zg7zjykv084hhvr0000gn/T/Rtmpx8fFIz/Rinst152253c0833cd/nandb/extdata/two_ch.tif&quot;</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_img &lt;-<span class="st"> </span><span class="kw">read_tif</span>(path)</a></code></pre></div>
 <pre><code>#&gt; Reading two_ch.tif: an 8-bit, 30x28 pixel image of unsigned
 #&gt; integer type. Reading 2 channels and 100 frames . . .</code></pre>
@@ -389,6 +390,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

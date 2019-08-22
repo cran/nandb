@@ -7,11 +7,12 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2019-07-08" />
+<meta name="date" content="2019-08-22" />
 
 <title>Brightness timeseries</title>
 
@@ -215,7 +216,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Brightness timeseries</h1>
-<h4 class="date">2019-07-08</h4>
+<h4 class="date">2019-08-22</h4>
 
 
 
@@ -232,6 +233,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>To get more fine-grained time information, we could overlap the windows to get 76 sets of frames (1-25, 2-26, 3-27, …, 76-100). This can be done with <code>brightness_timeseries(img, def = &quot;epsilon&quot;, frames_per_set = 25, overlap = TRUE)</code>. Beware when calculating overlapped timeseries like this that the resulting frames are correlated because e.g. the calculations on frames 1-25 and 2-26 use almost all of the same data.</p>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
